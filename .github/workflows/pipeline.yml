@@ -34,3 +34,10 @@ jobs:
           command: npm run test:e2e
           start: npm run start:test
           wait-on: http://localhost:3003
+      - name: deploy to heroku
+        uses: akhileshns/heroku-deploy@v3.12.14
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "blog-list-mh"
+          heroku_email: "mira.m.hamalainen@gmail.com"
+          branch: "main"
