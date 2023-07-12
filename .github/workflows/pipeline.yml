@@ -26,7 +26,16 @@ jobs:
       - name: Check style
         run: npm run lint
       - name: Build
-        run: npm run build
+        run: npm run buil
+      - name: Notify Failure
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: ${{ failure() }}
+        with:
+          severity: error
+          text: Build failed
+          description: Commit
+          details: https://github.com/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.triggering_actor }} broke the build
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test Backend
         run: npm run testBE
       - name: test Frontend
