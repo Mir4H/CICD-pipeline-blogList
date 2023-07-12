@@ -41,3 +41,7 @@ jobs:
           heroku_app_name: "blog-list-mh"
           heroku_email: "mira.m.hamalainen@gmail.com"
           branch: "main"
+          healthcheck: "https://blog-list-mh-9c2ec62b82de.herokuapp.com/health"
+          checkstring: "ok"
+          delay: 10
+          rollbackonhealthcheckfailed: true
