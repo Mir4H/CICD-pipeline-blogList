@@ -27,6 +27,15 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Notify Failure
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: ${{ failure() }}
+        with:
+          severity: error
+          text: Build failed
+          description: Commit
+          details: https://github.com/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.triggering_actor }} broke the build
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test Backend
         run: npm run testBE
       - name: test Frontend
@@ -49,6 +58,14 @@ jobs:
           checkstring: "ok"
           delay: 10
           rollbackonhealthcheckfailed: true
+      - name: Notify Success
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: ${{ success() && github.event_name == 'push'}}
+        with:
+          severity: info
+          text: A new version of Pokedex deployed
+          description: to https://blog-list-mh-9c2ec62b82de.herokuapp.com/ by ${{ github.triggering_actor }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     needs: [simple_deployment_pipeline]
