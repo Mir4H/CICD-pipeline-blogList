@@ -63,7 +63,7 @@ jobs:
         if: ${{ success() && github.event_name == 'push'}}
         with:
           severity: info
-          text: A new version of Pokedex deployed
+          text: A new version of Blog List deployed
           description: to https://blog-list-mh-9c2ec62b82de.herokuapp.com/ by ${{ github.triggering_actor }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
